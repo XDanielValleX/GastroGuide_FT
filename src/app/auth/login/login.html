@@ -45,12 +45,11 @@
             Registro exitoso. Por favor inicia sesión.
         </div>
 
-        <button type="submit" [disabled]="loginForm.invalid">Log in</button>
+        <button type="submit" [disabled]="loginForm.invalid || loading">
+            {{ loading ? 'Logging in...' : 'Log in' }}
+        </button>
 
         <a routerLink="/auth/register" class="discrete">Register now</a>
 
-        <p class="mocks">
-            Mocks: admin@test.com | creator@test.com | student@test.com
-        </p>
     </form>
 </div>

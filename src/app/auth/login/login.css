@@ -230,13 +230,6 @@ input {
     border-left-color: var(--color-success)
 }
 
-.mocks {
-    margin: 16px 0 0;
-    font-size: 11px;
-    color: rgba(0, 0, 0, .6);
-    max-width: 280px
-}
-
 @keyframes waves {
     0% {
         transform: rotate(0) translate(0, 0)

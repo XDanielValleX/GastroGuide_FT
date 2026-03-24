@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginError: boolean = false;
   registerSuccess: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,15 +39,22 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.loginError = false;
     this.registerSuccess = false;
+    this.loading = false;
 
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      const success = this.authService.login(email, password);
+      this.loading = true;
 
-      if (!success) {
-        this.loginError = true;
-      }
-      // La redirección exitosa ya la maneja el servicio
+      this.authService.login(email, password).subscribe({
+        next: () => {
+          // La redirección exitosa ya la maneja el servicio
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+          this.loginError = true;
+        },
+      });
     }
   }
 
