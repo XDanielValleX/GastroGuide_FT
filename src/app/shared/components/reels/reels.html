@@ -1,0 +1,57 @@
+<div class="feed-container">
+    <div *ngFor="let short of gastroShorts" class="short-card">
+
+        <div class="reel-shell" aria-label="Reel">
+            <div class="reel-frame" (click)="togglePlay(short.id, videoEl)">
+                <video #videoEl class="video-player" [src]="short.videoUrl" loop playsinline preload="metadata"
+                    [attr.data-id]="short.id" [muted]="isMuted(short.id)"
+                    (loadedmetadata)="applyAudioState(short.id, videoEl)"></video>
+
+                <div class="audio-controls" role="group" aria-label="Audio" (click)="$event.stopPropagation()">
+                    <button class="audio-btn" type="button" (click)="toggleMute(short.id, videoEl); $event.stopPropagation()"
+                        [attr.aria-label]="isMuted(short.id) ? 'Activar audio' : 'Silenciar'">
+                        {{ isMuted(short.id) ? '🔇' : '🔊' }}
+                    </button>
+
+                    <input class="volume-slider" [id]="'vol-' + short.id" type="range" min="0" max="1" step="0.05"
+                        [value]="getVolume(short.id)" [style.--vol]="getVolume(short.id)"
+                        (input)="onVolumeInput(short.id, videoEl, $event)"
+                        (click)="$event.stopPropagation()" aria-label="Nivel de audio" />
+                </div>
+
+                <div class="video-info">
+                    <h3 class="creator-name">@{{ short.creator }}</h3>
+                    <p class="description">{{ short.description }}</p>
+                    <div class="hashtags">
+                        <span *ngFor="let tag of short.hashtags">#{{ tag }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons" aria-label="Acciones">
+                <div class="action-item creator">
+                    <button class="creator-btn" type="button" [attr.aria-label]="'Ver perfil de ' + short.creator"
+                        (click)="onCreatorClick(short)">
+                        <span class="creator-initial" aria-hidden="true">{{ creatorInitial(short.creator) }}</span>
+                        <span class="creator-plus" aria-hidden="true">+</span>
+                    </button>
+                </div>
+
+                <div class="action-item">
+                    <button class="round-btn" style="color: var(--color-danger);" type="button"
+                        aria-label="Me gusta">❤️</button>
+                    <span>{{ formatCount(short.likes) }}</span>
+                </div>
+                <div class="action-item">
+                    <button class="round-btn" type="button" aria-label="Comentarios">💬</button>
+                    <span>{{ formatCount(short.comments) }}</span>
+                </div>
+                <div class="action-item">
+                    <button class="round-btn" type="button" aria-label="Compartir">🔗</button>
+                    <span>Share</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

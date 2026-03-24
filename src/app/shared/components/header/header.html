@@ -1,0 +1,21 @@
+<header class="header-container">
+    <div class="brand">
+        <a routerLink="/" class="brand-link">GastroGuide<span class="brand-plus">+</span></a>
+    </div>
+
+    <div class="profile-actions">
+        <button class="btn-pill btn-primary" type="button" routerLink="/home3" *ngIf="showCreate">
+            CREAR
+        </button>
+
+        <button class="btn-pill btn-outline profile-link" type="button" [routerLink]="profileRoute">
+            <img *ngIf="user?.image" [src]="user?.image" alt="Avatar" class="mini-avatar"
+                (error)="onAvatarError($event)" />
+            <span class="mini-name">{{ user?.username || user?.name || 'Mi perfil' }}</span>
+        </button>
+
+        <button class="btn-pill btn-transparent" (click)="onLogoutClick()">
+            Cerrar sesión
+        </button>
+    </div>
+</header>

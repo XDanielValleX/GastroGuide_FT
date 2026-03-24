@@ -1,0 +1,21 @@
+<div class="role-select" role="group" [attr.aria-label]="label || 'Selecciona tu rol'">
+  <label *ngIf="label" class="role-label">{{ label }}</label>
+
+  <button
+    type="button"
+    class="role-btn"
+    [class.selected]="value === 'STUDENT'"
+    (click)="select('STUDENT')"
+  >
+    Estudiante
+  </button>
+
+  <button
+    type="button"
+    class="role-btn"
+    [class.selected]="value === 'CREATOR'"
+    (click)="select('CREATOR')"
+  >
+    Creador
+  </button>
+</div>

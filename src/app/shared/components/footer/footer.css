@@ -1,0 +1,226 @@
+.gg-footer {
+    background-color: var(--color-secondary-2);
+    /* Azul oscuro #14213D */
+    color: var(--color-text-white);
+    font-family: sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px 30px;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- BRAND & NEWSLETTER --- */
+.brand-block {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+}
+
+.brand {
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    color: var(--color-text-white);
+}
+
+.brand-plus {
+    color: var(--color-primary);
+    /* F8500A */
+}
+
+.tagline {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+.newsletter-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.newsletter input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-white);
+    outline: none;
+}
+
+.newsletter input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.newsletter input:focus {
+    box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-white);
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: filter 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.note {
+    font-size: 0.8rem;
+    color: var(--color-success);
+    /* Usamos tu color success si existe, o verde */
+    margin-top: 10px;
+}
+
+/* Para accesibilidad */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* --- ENLACES --- */
+.link-groups {
+    display: flex;
+    flex: 2;
+    justify-content: space-around;
+    min-width: 300px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.group h5 {
+    color: var(--color-text-white);
+    font-size: 1.1rem;
+    margin: 0 0 15px 0;
+}
+
+.group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.group li {
+    margin-bottom: 10px;
+}
+
+.group a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.group a:hover {
+    color: var(--color-primary);
+}
+
+/* --- REDES SOCIALES --- */
+.social-block {
+    flex: 0.5;
+    min-width: 150px;
+}
+
+.social-block h5 {
+    color: var(--color-text-white);
+    font-size: 1.1rem;
+    margin: 0 0 15px 0;
+}
+
+.social-row {
+    display: flex;
+    gap: 10px;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-white);
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.social:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-3px);
+}
+
+/* --- BASE DEL FOOTER --- */
+.footer-base {
+    background-color: var(--color-secondary-1);
+    /* Azul #132041 para contrastar */
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.footer-base p {
+    margin: 0;
+}
+
+.mini-links {
+    display: flex;
+    gap: 15px;
+}
+
+.mini-links a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.mini-links a:hover {
+    color: var(--color-text-white);
+}
+
+/* Responsive básico */
+@media (max-width: 768px) {
+    .footer-inner {
+        flex-direction: column;
+    }
+
+    .link-groups {
+        justify-content: flex-start;
+    }
+
+    .footer-base {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}

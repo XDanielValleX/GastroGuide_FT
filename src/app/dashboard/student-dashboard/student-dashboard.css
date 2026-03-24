@@ -1,0 +1,28 @@
+/* Layout Principal: Ocupa toda la pantalla y evita scroll global */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-text-black);
+}
+
+/* Contenedor que agrupa Sidebar y Contenido (Debajo del header) */
+.main-wrapper {
+    display: flex;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
+
+/* Área donde van las vistas (Reels, Cursos, etc) */
+.content-area {
+    flex: 1;
+    /* Ocupa todo el ancho restante a la derecha del Sidebar */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    /* El scroll lo maneja el componente hijo (ShortsFeed) */
+    background-color: var(--color-text-black);
+    /* Fondo negro para que los videos se vean inmersivos */
+    position: relative;
+}

@@ -1,0 +1,25 @@
+/* Layout Principal */
+.app-layout {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: var(--color-text-black);
+}
+
+/* Contenedor que agrupa Sidebar y Contenido (Debajo del header) */
+.main-wrapper {
+	display: flex;
+	height: calc(100vh - 70px);
+	overflow: hidden;
+}
+
+/* Área donde van las vistas */
+.content-area {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	overflow: hidden;
+	background-color: var(--color-text-black);
+	position: relative;
+}

@@ -1,0 +1,39 @@
+<aside class="sidebar-container" aria-label="Sidebar">
+
+    <div class="sidebar-top">
+        <button class="toggle-btn" type="button" (click)="toggleCollapsed()" [attr.aria-label]="collapsed ? 'Mostrar menú' : 'Ocultar menú'"
+            [attr.aria-expanded]="!collapsed">
+            ☰
+        </button>
+    </div>
+
+    <div class="sidebar-content" [attr.aria-hidden]="collapsed">
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" [(ngModel)]="query" placeholder="Buscar..." aria-label="Buscar"
+                    (keyup.enter)="onSearch()">
+                <button class="btn-search" type="button" (click)="onSearch()">🔍</button>
+            </div>
+        </div>
+
+        <nav class="nav-menu" aria-label="Navegación">
+            <a routerLink="/dashboard/student" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span class="icon" aria-hidden="true">📱</span>
+                <span class="text">Reels</span>
+            </a>
+            <a routerLink="/home2/courses" class="nav-item" routerLinkActive="active">
+                <span class="icon" aria-hidden="true">📚</span>
+                <span class="text">Cursos</span>
+            </a>
+            <a routerLink="/home2/recetas" class="nav-item" routerLinkActive="active">
+                <span class="icon" aria-hidden="true">🍳</span>
+                <span class="text">Recetas</span>
+            </a>
+            <a routerLink="/home2/carrito" class="nav-item" routerLinkActive="active">
+                <span class="icon" aria-hidden="true">🛒</span>
+                <span class="text">Carrito</span>
+            </a>
+        </nav>
+    </div>
+
+</aside>

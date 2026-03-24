@@ -1,0 +1,107 @@
+/* Paleta de Colores GastroGuide (según imagen proporcionada) */
+:root {
+    /* Botones */
+    --color-primary: #F8500A;
+    /* Naranja */
+    --color-secondary-1: #132041;
+    /* Azul Muy Oscuro 1 */
+    --color-secondary-2: #14213D;
+    /* Azul Muy Oscuro 2 */
+
+    /* Componentes y Textos */
+    --color-text-white: #FFFFFF;
+    --color-text-black: #000000;
+    --color-bg-general: #E5E5E5;
+    /* Gris Claro Fondo */
+    --color-bg-card: #FFFFFF;
+    /* Blanco Tarjetas */
+
+    /* Alertas / Estado */
+    --color-success: #57C986;
+    /* Verde */
+    --color-danger: #EF5350;
+    /* Rojo/Coral */
+    --color-warning: #FFCA28;
+    /* Amarillo */
+    --color-info: #26C6DA;
+    /* Cian/Turquesa */
+}
+
+/* Estilos básicos para las vistas predeterminadas */
+body {
+    font-family: sans-serif;
+    background-color: var(--color-bg-general);
+    color: var(--color-text-black);
+    margin: 0;
+    padding: 0;
+}
+
+.auth-card {
+    background-color: var(--color-bg-card);
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 50px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: var(--color-secondary-2);
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* Importante para el padding */
+}
+
+/* Aplicación de colores de la imagen a botones */
+button.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary);
+    color: var(--color-text-white);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button.btn-primary:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.alert-danger {
+    background-color: var(--color-danger);
+    color: var(--color-text-white);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: var(--color-success);
+    color: var(--color-text-white);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+}
