@@ -1,0 +1,33 @@
+<div class="page">
+  <header class="page-head">
+    <h1 class="page-title">Ingresos</h1>
+  </header>
+
+  <section class="card" aria-label="Resumen de ingresos">
+    <div class="card-title">Resumen</div>
+    <ng-container *ngIf="summary$ | async as summary; else loading">
+      <div class="money">
+        <div class="money-item">
+          <div class="label">Ingresos (estimado)</div>
+          <div class="value">{{ summary.totalRevenue }}</div>
+        </div>
+        <div class="money-item">
+          <div class="label">Inscripciones</div>
+          <div class="value">{{ summary.enrollments }}</div>
+        </div>
+        <div class="money-item">
+          <div class="label">Estudiantes únicos</div>
+          <div class="value">{{ summary.uniqueStudents }}</div>
+        </div>
+      </div>
+      <p class="hint">
+        Si tu backend aún no expone ingresos, esta sección muestra valores por defecto.
+        Cuando exista un endpoint real, se conectará automáticamente.
+      </p>
+    </ng-container>
+
+    <ng-template #loading>
+      <p class="hint">Cargando ingresos…</p>
+    </ng-template>
+  </section>
+</div>

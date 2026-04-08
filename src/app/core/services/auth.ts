@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap, timeout } from 'rxjs';
 
 export type RegisterRole = 'STUDENT' | 'CREATOR';
 
@@ -14,8 +14,10 @@ export interface User {
 }
 
 interface AuthResponseDto {
-  token: string;
-  refreshToken: string;
+  userSessionEntity: {
+    jwtToken: string;
+    refreshToken: string;
+  };
 }
 
 interface RefreshTokenResponseDto {
@@ -30,6 +32,7 @@ export class AuthService {
   public currentUser$: Observable<User | null>;
 
   private readonly apiBaseUrl = 'http://localhost:8080/api';
+  private readonly requestTimeoutMs = 15000;
 
   constructor(private router: Router, private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -48,8 +51,18 @@ export class AuthService {
   login(email: string, password: string): Observable<User> {
     return this.http
       .post<AuthResponseDto>(`${this.apiBaseUrl}/auth/login`, { email, password })
+      .pipe(timeout(this.requestTimeoutMs))
       .pipe(
-        tap((res) => this.setSession(res.token, res.refreshToken)),
+        tap((res) => {
+          const accessToken = res?.userSessionEntity?.jwtToken;
+          const refreshToken = res?.userSessionEntity?.refreshToken;
+
+          if (!accessToken || !refreshToken) {
+            throw new Error('Login completed but the backend did not return a valid session');
+          }
+
+          this.setSession(accessToken, refreshToken);
+        }),
         map(() => {
           const user = this.currentUserValue;
           if (!user) {
@@ -69,6 +82,7 @@ export class AuthService {
 
     return this.http
       .post<RefreshTokenResponseDto>(`${this.apiBaseUrl}/auth/refresh`, { refreshToken })
+      .pipe(timeout(this.requestTimeoutMs))
       .pipe(
         tap((res) => {
           localStorage.setItem('gastro_token', res.token);
@@ -180,11 +194,44 @@ export class AuthService {
     const payload = this.parseJwtPayload(token);
     if (!payload) return null;
 
-    const email = typeof payload.sub === 'string' ? payload.sub : '';
+    const email =
+      (typeof payload.sub === 'string' && payload.sub) ||
+      (typeof payload.subject === 'string' && payload.subject) ||
+      (typeof payload.email === 'string' && payload.email) ||
+      (typeof payload.preferred_username === 'string' && payload.preferred_username) ||
+      (typeof payload.username === 'string' && payload.username) ||
+      (typeof payload.userName === 'string' && payload.userName) ||
+      (typeof payload.sub === 'number' ? String(payload.sub) : '') ||
+      '';
     const authorities: string[] = Array.isArray(payload.authorities) ? payload.authorities : [];
     const role = this.deriveRole(authorities);
-    const id = typeof payload.jti === 'string' ? payload.jti : '';
-    const firstName = email ? email.split('@')[0] : 'User';
+
+    // IMPORTANT: Do not use JWT `jti` as user id.
+    // Backend generates a random `jti` per token, so it changes on every login/refresh.
+    // We need a stable per-user identifier for local features (drafts, saved panels, etc.).
+    // Prefer common id claims if present; otherwise fall back to email.
+    const stableIdCandidate =
+      (typeof payload.userId === 'string' && payload.userId) ||
+      (typeof payload.user_id === 'string' && payload.user_id) ||
+      (typeof payload.uid === 'string' && payload.uid) ||
+      (typeof payload.id === 'string' && payload.id) ||
+      (typeof payload.userId === 'number' ? String(payload.userId) : '') ||
+      (typeof payload.id === 'number' ? String(payload.id) : '') ||
+      '';
+    // Last-resort: if the token doesn't include any stable identifier, fall back to `jti`.
+    // This is NOT stable across logins/refresh, but prevents local features from breaking entirely.
+    const fallbackTokenId = typeof payload.jti === 'string' ? payload.jti : '';
+    const id = stableIdCandidate || email || fallbackTokenId;
+
+    const tokenDisplayName =
+      (typeof payload.displayName === 'string' && payload.displayName.trim()) ||
+      (typeof payload.userName === 'string' && payload.userName.trim()) ||
+      (typeof payload.firstName === 'string' && payload.firstName.trim()) ||
+      '';
+
+    const firstName = tokenDisplayName || (email ? email.split('@')[0] : 'User');
+
+    if (!id) return null;
 
     return {
       id,

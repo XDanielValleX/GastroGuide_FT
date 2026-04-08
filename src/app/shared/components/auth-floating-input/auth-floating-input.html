@@ -1,5 +1,10 @@
-<div class="floating-label" [class.is-valid]="showValidState">
+<div
+  class="floating-label"
+  [class.is-valid]="showValidState"
+  (pointerdown)="focusInput($event)"
+>
   <input
+    #inputEl
     [id]="id"
     [type]="type"
     placeholder="{{ placeholder }}"
@@ -11,9 +16,9 @@
     [formControl]="control"
   />
 
-  <label [for]="id">{{ label }}</label>
+  <label class="field-label" [for]="id">{{ label }}</label>
 
-  <div class="icon" aria-hidden="true">
+  <label class="icon" [for]="id" aria-hidden="true">
     <ng-container [ngSwitch]="icon">
       <svg *ngSwitchCase="'email'" viewBox="0 0 100 100">
         <path
@@ -42,5 +47,5 @@
         />
       </svg>
     </ng-container>
-  </div>
+  </label>
 </div>

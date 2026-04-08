@@ -65,6 +65,90 @@
                     />
                 </div>
             </div>
+
+            <div class="row">
+                <div class="row-col">
+                    <app-auth-floating-input
+                        id="identificationNumber"
+                        label="Identification number:"
+                        type="text"
+                        placeholder="123456789"
+                        [inputmode]="'numeric'"
+                        [pattern]="'[0-9]*'"
+                        icon="user"
+                        [control]="identificationNumberCtrl"
+                    />
+                </div>
+                <div class="row-col">
+                    <div
+                        class="floating-label select"
+                        [class.is-valid]="identificationTypeCtrl.valid && (identificationTypeCtrl.dirty || identificationTypeCtrl.touched)"
+                    >
+                        <select
+                            id="identificationType"
+                            formControlName="identificationType"
+                            aria-label="Identification type:"
+                            title="Identification type:"
+                        >
+                            <option value="CC">CC</option>
+                            <option value="CE">CE</option>
+                            <option value="PASSPORT">PASSPORT</option>
+                            <option value="TI">TI</option>
+                            <option value="NIT">NIT</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+
+                        <label for="identificationType">Identification type:</label>
+
+                        <div class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="floating-label select"
+                [class.is-valid]="nationalityCtrl.valid && (nationalityCtrl.dirty || nationalityCtrl.touched)"
+            >
+                <select
+                    id="nationality"
+                    formControlName="nationality"
+                    aria-label="Nationality:"
+                    title="Nationality:"
+                >
+                    <option value="Colombiana">Colombiana</option>
+                    <option value="Mexicana">Mexicana</option>
+                    <option value="Peruana">Peruana</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chilena">Chilena</option>
+                    <option value="Española">Española</option>
+                    <option value="Otra">Otra</option>
+                </select>
+
+                <label for="nationality">Nationality:</label>
+
+                <div class="icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"
+                        />
+                    </svg>
+                </div>
+            </div>
+
+            <app-auth-floating-input
+                id="specialization"
+                label="Specialization:"
+                type="text"
+                placeholder="Experto en..."
+                icon="user"
+                [control]="specializationCtrl"
+            />
         </ng-container>
 
         <app-auth-floating-input

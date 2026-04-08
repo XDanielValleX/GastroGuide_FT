@@ -3,18 +3,22 @@
     /* Botones */
     --color-primary: #F8500A;
     /* Naranja */
-    --color-secondary-1: #132041;
-    /* Azul Muy Oscuro 1 */
-    --color-secondary-2: #14213D;
-    /* Azul Muy Oscuro 2 */
+    --color-secondary-1: #101D26;
+    /* Azul Muy Oscuro 1 (ref) */
+    --color-secondary-2: #1F2F40;
+    /* Azul Muy Oscuro 2 (ref) */
 
     /* Componentes y Textos */
     --color-text-white: #FFFFFF;
     --color-text-black: #000000;
-    --color-bg-general: #E5E5E5;
-    /* Gris Claro Fondo */
+    --color-bg-general: #DDE2E5;
+    /* Gris Claro Fondo (ref) */
     --color-bg-card: #FFFFFF;
     /* Blanco Tarjetas */
+
+    /* Superficies glass */
+    --color-glass: rgba(16, 29, 38, 0.55);
+    --color-glass-border: rgba(255, 255, 255, 0.12);
 
     /* Alertas / Estado */
     --color-success: #57C986;
@@ -34,6 +38,87 @@ body {
     color: var(--color-text-black);
     margin: 0;
     padding: 0;
+}
+
+/* Ocultar la barra de scroll global (manteniendo el scroll) */
+html,
+body {
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+* {
+    scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+/* Animación de entrada al cambiar de vista (simula carga real) */
+.route-shell {
+    position: relative;
+}
+
+@keyframes ggViewIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes ggItemIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* El componente de la ruta (host) */
+.route-shell > :not(router-outlet) {
+    animation: ggViewIn 260ms ease both;
+}
+
+/* Pequeño efecto progresivo para los primeros hijos del layout */
+.route-shell > :not(router-outlet) > * {
+    animation: ggItemIn 320ms ease both;
+    animation-delay: 70ms;
+}
+
+.route-shell > :not(router-outlet) > *:nth-child(1) {
+    animation-delay: 40ms;
+}
+
+.route-shell > :not(router-outlet) > *:nth-child(2) {
+    animation-delay: 80ms;
+}
+
+.route-shell > :not(router-outlet) > *:nth-child(3) {
+    animation-delay: 120ms;
+}
+
+.route-shell > :not(router-outlet) > *:nth-child(4) {
+    animation-delay: 160ms;
+}
+
+.route-shell > :not(router-outlet) > *:nth-child(5) {
+    animation-delay: 200ms;
+}
+
+.route-shell > :not(router-outlet) > *:nth-child(6) {
+    animation-delay: 240ms;
 }
 
 .auth-card {

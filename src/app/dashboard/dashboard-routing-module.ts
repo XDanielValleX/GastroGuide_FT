@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard';
 import { CreatorDashboardComponent } from './creator-dashboard/creator-dashboard';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard';
+import { adminGuard } from '../core/guards/admin-guard';
 
 const routes: Routes = [
   { path: 'student', component: StudentDashboardComponent },
   { path: 'creator', component: CreatorDashboardComponent },
-  { path: 'admin', component: AdminDashboardComponent },
+  { path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard] },
   // Si alguien entra a /dashboard a secas, lo mandamos por defecto a student (o donde prefieras)
   { path: '', redirectTo: 'student', pathMatch: 'full' }
 ];

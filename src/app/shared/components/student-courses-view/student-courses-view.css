@@ -1,0 +1,29 @@
+.section-block {
+  margin-top: 18px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-secondary-1);
+  text-align: left;
+}
+
+.section-subtitle {
+  margin: 4px 0 12px 0;
+  color: rgba(0, 0, 0, 0.60);
+}
+
+.placeholder {
+  margin: 0;
+  padding: 16px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.placeholder-text {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.65);
+}

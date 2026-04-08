@@ -1,0 +1,395 @@
+:host {
+  display: block;
+  overflow-x: hidden;
+}
+
+:host ::ng-deep .create-wrapper {
+  position: relative;
+  padding: 14px;
+  overflow: visible;
+}
+
+:host ::ng-deep .create-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px;
+  background: var(--color-bg-card);
+  backdrop-filter: none;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .create-header h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--color-secondary-2);
+}
+
+:host ::ng-deep .subtitle {
+  margin: 6px 0 0;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+:host ::ng-deep .wizard-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 18px;
+}
+
+:host ::ng-deep .create-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 16px;
+  align-items: start;
+}
+
+:host ::ng-deep .create-main {
+  min-width: 0;
+}
+
+:host ::ng-deep .create-side {
+  min-width: 0;
+}
+
+:host ::ng-deep .step {
+  font-weight: 700;
+  font-size: 13px;
+  opacity: 0.55;
+  color: rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+
+:host ::ng-deep .step.active {
+  opacity: 1;
+  color: var(--color-secondary-2);
+}
+
+:host ::ng-deep .bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .bar-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-info));
+  transition: width 0.35s ease;
+}
+
+:host ::ng-deep .panel {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+:host ::ng-deep .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+:host ::ng-deep label {
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.82);
+}
+
+:host ::ng-deep input,
+:host ::ng-deep textarea,
+:host ::ng-deep select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.78);
+  box-sizing: border-box;
+}
+
+:host ::ng-deep input:focus,
+:host ::ng-deep textarea:focus,
+:host ::ng-deep select:focus {
+  outline: none;
+  border-color: var(--color-info);
+  box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.35);
+}
+
+:host ::ng-deep .hint {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+:host ::ng-deep .actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+:host ::ng-deep .btn {
+  appearance: none;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 18px;
+  font-weight: 800;
+  cursor: pointer;
+  background: var(--color-secondary-2);
+  color: var(--color-text-white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+:host ::ng-deep .btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+:host ::ng-deep .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+:host ::ng-deep .btn.secondary {
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.82);
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .btn.ghost {
+  background: transparent;
+  color: var(--color-secondary-2);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  box-shadow: none;
+}
+
+:host ::ng-deep .info {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.35);
+  border-left: 3px solid var(--color-info);
+}
+
+:host ::ng-deep .info.warning {
+  border-left-color: var(--color-warning);
+}
+
+:host ::ng-deep .list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+:host ::ng-deep .card {
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+:host ::ng-deep .card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+:host ::ng-deep .card-title {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+:host ::ng-deep .card-title h4 {
+  margin: 0;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.86);
+}
+
+:host ::ng-deep .muted {
+  margin: 4px 0 0;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+:host ::ng-deep .chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(248, 80, 10, 0.12);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+:host ::ng-deep .chip.light {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+}
+
+:host ::ng-deep .card-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+:host ::ng-deep .badge {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.72);
+}
+
+:host ::ng-deep .badge.success {
+  background: rgba(87, 201, 134, 0.18);
+  color: rgba(0, 0, 0, 0.75);
+}
+
+:host ::ng-deep .badge.warning {
+  background: rgba(255, 202, 40, 0.22);
+  color: rgba(0, 0, 0, 0.78);
+}
+
+:host ::ng-deep .icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+}
+
+:host ::ng-deep .icon.danger {
+  background: rgba(239, 83, 80, 0.16);
+}
+
+:host ::ng-deep .empty {
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px dashed rgba(0, 0, 0, 0.22);
+  background: rgba(255, 255, 255, 0.22);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+:host ::ng-deep .subpanel {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+:host ::ng-deep .subpanel h4 {
+  margin: 0 0 10px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+:host ::ng-deep .lesson-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+:host ::ng-deep .lesson {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+:host ::ng-deep .lesson-main {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+:host ::ng-deep .lesson-title {
+  margin: 0;
+  font-weight: 900;
+}
+
+:host ::ng-deep .lesson-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+:host ::ng-deep .summary-title {
+  margin: 0 0 10px;
+  color: rgba(0, 0, 0, 0.86);
+}
+
+:host ::ng-deep .summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+:host ::ng-deep .summary-item {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:host ::ng-deep .summary-item span {
+  color: rgba(0, 0, 0, 0.62);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+:host ::ng-deep .summary-item strong {
+  color: rgba(0, 0, 0, 0.86);
+}
+
+:host ::ng-deep .toast {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--color-secondary-1);
+  color: var(--color-text-white);
+}
+
+@media (max-width: 768px) {
+  :host ::ng-deep .wizard-progress {
+    flex-wrap: wrap;
+  }
+
+  :host ::ng-deep .create-body {
+    grid-template-columns: 1fr;
+  }
+
+  :host ::ng-deep .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :host ::ng-deep .card-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

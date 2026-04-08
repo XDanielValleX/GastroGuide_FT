@@ -1,0 +1,61 @@
+.page {
+  display: grid;
+  gap: 12px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--color-text-white);
+}
+
+.card {
+  background: rgba(16, 29, 38, 0.65);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 14px;
+  padding: 12px 12px;
+}
+
+.card-title {
+  font-weight: 900;
+  color: var(--color-text-white);
+  margin-bottom: 10px;
+}
+
+.box {
+  width: 100%;
+  resize: vertical;
+  border-radius: 14px;
+  border: 1px solid var(--color-glass-border);
+  padding: 12px 12px;
+  background: rgba(31, 47, 64, 0.55);
+  color: var(--color-text-white);
+  outline: none;
+  font-size: 1rem;
+}
+
+.box:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(0.95);
+}

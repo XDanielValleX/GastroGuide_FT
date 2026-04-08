@@ -1,0 +1,26 @@
+<div class="sf-bar" role="search">
+  <label class="sr-only" for="sf-input">Buscar</label>
+
+  <div class="sf-field">
+    <input
+      id="sf-input"
+      class="sf-input"
+      type="search"
+      [value]="query"
+      (input)="onQueryInput(($any($event.target)).value)"
+      (keyup.enter)="onSubmit()"
+      [placeholder]="placeholder"
+      aria-label="Buscar"
+    />
+
+    <button
+      class="sf-filter"
+      type="button"
+      (click)="onFilterClick()"
+      aria-label="Filtrar"
+      title="Filtrar"
+    >
+      <img class="sf-filter-ico" src="/filter_right_icon_120099.svg" alt="" aria-hidden="true" />
+    </button>
+  </div>
+</div>

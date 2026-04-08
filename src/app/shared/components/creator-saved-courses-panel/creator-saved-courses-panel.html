@@ -1,0 +1,89 @@
+<aside class="saved-panel">
+  <div class="block">
+    <div class="block-head">
+      <span class="label">Guardado reciente</span>
+    </div>
+
+    <div class="saved-cards" style="margin-bottom: 10px;">
+      <button class="saved-card" type="button" (click)="setTab('COURSES')" [disabled]="activeTab === 'COURSES'">Cursos</button>
+      <button class="saved-card" type="button" (click)="setTab('MODULES')" [disabled]="activeTab === 'MODULES'">Módulos</button>
+      <button class="saved-card" type="button" (click)="setTab('LESSONS')" [disabled]="activeTab === 'LESSONS'">Lecciones</button>
+    </div>
+
+    <ng-container *ngIf="activeTab === 'COURSES'">
+      <div
+        class="saved-empty"
+        *ngIf="drafts.length === 0 && indexedCourses.length === 0 && publishedCourses.length === 0 && (loadingIndexedCourses || loadingPublishedCourses)"
+      >
+        Cargando…
+      </div>
+
+      <div class="draft-list" *ngIf="drafts.length > 0">
+        <div class="label">Borradores</div>
+        <div class="draft-item" *ngFor="let d of drafts">
+          <button class="draft-main" type="button" (click)="onSelectDraft(d)" [title]="d.title || 'Sin título'">
+            <div class="draft-title">{{ d.title || 'Sin título' }}</div>
+            <div class="draft-sub">Actualizado: {{ d.updatedAt ? (d.updatedAt | date: 'mediumDate') : '—' }}</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="draft-list" *ngIf="indexedCourses.length > 0" style="margin-top: 10px;">
+        <div class="label">Creados (backend)</div>
+        <div class="draft-item" *ngFor="let c of indexedCourses">
+          <button class="draft-main" type="button" disabled [title]="c.title || 'Sin título'">
+            <div class="draft-title">{{ c.title || 'Sin título' }}</div>
+            <div class="draft-sub">ID: {{ c.id }}</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="draft-list" *ngIf="drafts.length === 0 && indexedCourses.length === 0 && publishedCourses.length > 0" style="margin-top: 10px;">
+        <div class="label">Publicados</div>
+        <div class="draft-item" *ngFor="let p of publishedCourses">
+          <button class="draft-main" type="button" disabled [title]="p.title || 'Sin título'">
+            <div class="draft-title">{{ p.title || 'Sin título' }}</div>
+            <div class="draft-sub">ID: {{ p.id }}</div>
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="saved-empty"
+        *ngIf="drafts.length === 0 && indexedCourses.length === 0 && publishedCourses.length === 0 && !loadingIndexedCourses && !loadingPublishedCourses"
+      >
+        Aún no hay información guardada.
+      </div>
+      <div class="error" *ngIf="indexedCoursesError">{{ indexedCoursesError }}</div>
+      <div class="error" *ngIf="publishedCoursesError">{{ publishedCoursesError }}</div>
+    </ng-container>
+
+    <ng-container *ngIf="activeTab === 'MODULES'">
+      <div class="saved-empty" *ngIf="!draftForModulesAndLessons">No hay borradores para mostrar módulos.</div>
+      <div class="draft-list" *ngIf="draftForModulesAndLessons && moduleItems.length > 0">
+        <div class="label">{{ draftForModulesAndLessons.title || 'Sin título' }}</div>
+        <div class="draft-item" *ngFor="let m of moduleItems">
+          <div class="draft-main" style="cursor: default;">
+            <div class="draft-title">{{ m.title }}</div>
+            <div class="draft-sub">Lecciones: {{ m.lessonsCount }} · {{ m.saved ? 'Guardado' : 'Pendiente' }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="saved-empty" *ngIf="draftForModulesAndLessons && moduleItems.length === 0">Aún no hay módulos guardados.</div>
+    </ng-container>
+
+    <ng-container *ngIf="activeTab === 'LESSONS'">
+      <div class="saved-empty" *ngIf="!draftForModulesAndLessons">No hay borradores para mostrar lecciones.</div>
+      <div class="draft-list" *ngIf="draftForModulesAndLessons && lessonItems.length > 0">
+        <div class="label">{{ draftForModulesAndLessons.title || 'Sin título' }}</div>
+        <div class="draft-item" *ngFor="let l of lessonItems">
+          <div class="draft-main" style="cursor: default;">
+            <div class="draft-title">{{ l.title }}</div>
+            <div class="draft-sub">{{ l.moduleTitle }} · {{ l.saved ? 'Guardado' : 'Pendiente' }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="saved-empty" *ngIf="draftForModulesAndLessons && lessonItems.length === 0">Aún no hay lecciones guardadas.</div>
+    </ng-container>
+  </div>
+</aside>

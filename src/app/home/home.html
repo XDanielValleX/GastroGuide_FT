@@ -1,0 +1,182 @@
+<div class="home-shell">
+  <header class="public-header" role="banner">
+    <div class="public-header__inner">
+      <a class="brand" routerLink="/" aria-label="Ir al inicio">
+        GastroGuide<span class="brand-plus">+</span>
+      </a>
+
+      <nav class="public-nav" aria-label="Navegación principal">
+        <a class="public-nav__link" href="#explorar">Explorar</a>
+        <a class="public-nav__link" href="#tendencias">Tendencias</a>
+        <a class="public-nav__link" href="#aceleradores">Rutas</a>
+        <a class="public-nav__link" href="#contact">Contacto</a>
+      </nav>
+
+      <form class="public-search" (ngSubmit)="onSearchSubmit()" aria-label="Buscar cursos">
+        <input
+          class="public-search__input"
+          name="q"
+          [(ngModel)]="searchQuery"
+          placeholder="Buscar recetas, técnicas o cursos"
+          autocomplete="off"
+        />
+      </form>
+
+      <div class="public-actions">
+        <a class="btn btn-outline" routerLink="/auth/login">Iniciar sesión</a>
+        <a class="btn btn-primary" routerLink="/auth/register">Regístrate</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="home" role="main">
+    <section class="hero" aria-label="Presentación">
+      <div class="hero__inner">
+        <div class="hero-card">
+          <h1>Un aprendizaje delicioso</h1>
+          <p>
+            Habilidades para tu cocina (y tu futuro). Aprende técnicas reales,
+            crea cursos y comparte tu talento en GastroGuide.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" routerLink="/auth/register">Comenzar gratis</a>
+            <a class="btn btn-outline" routerLink="/auth/login">Ya tengo cuenta</a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-art__plate"></div>
+          <div class="hero-art__steam"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="explorar" class="section">
+      <div class="section-head">
+        <h2>Según tus intereses recientes</h2>
+        <p>Recomendaciones rápidas para seguir practicando.</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="course-card" *ngFor="let c of recentCourses">
+          <div class="course-thumb" aria-hidden="true"></div>
+
+          <div class="course-body">
+            <h3 class="course-title">{{ c.title }}</h3>
+            <p class="course-author">{{ c.author }}</p>
+
+            <div class="course-meta">
+              <span class="rating">{{ c.rating | number : '1.1-1' }}</span>
+              <span class="reviews">{{ c.reviewsLabel }}</span>
+            </div>
+
+            <div class="course-badges" *ngIf="c.badges?.length">
+              <span class="badge" *ngFor="let b of c.badges">{{ b.label }}</span>
+            </div>
+
+            <div class="course-price">
+              <strong>{{ c.priceLabel }}</strong>
+              <span class="old" *ngIf="c.oldPriceLabel">{{ c.oldPriceLabel }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="tendencias" class="section">
+      <div class="section-head">
+        <h2>Cursos en tendencia</h2>
+        <p>Temas que están moviendo la comunidad.</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="course-card" *ngFor="let c of trendingCourses">
+          <div class="course-thumb course-thumb--alt" aria-hidden="true"></div>
+
+          <div class="course-body">
+            <h3 class="course-title">{{ c.title }}</h3>
+            <p class="course-author">{{ c.author }}</p>
+
+            <div class="course-meta">
+              <span class="rating">{{ c.rating | number : '1.1-1' }}</span>
+              <span class="reviews">{{ c.reviewsLabel }}</span>
+            </div>
+
+            <div class="course-badges" *ngIf="c.badges?.length">
+              <span class="badge" *ngFor="let b of c.badges">{{ b.label }}</span>
+            </div>
+
+            <div class="course-price">
+              <strong>{{ c.priceLabel }}</strong>
+              <span class="old" *ngIf="c.oldPriceLabel">{{ c.oldPriceLabel }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="aceleradores" class="section section--light">
+      <div class="section-head">
+        <h2>¿Todo listo para llevar tu cocina al siguiente nivel?</h2>
+        <p>Rutas de aprendizaje con metas claras y proyectos prácticos.</p>
+      </div>
+
+      <div class="promo-grid">
+        <article class="promo" *ngFor="let p of promoCards">
+          <div class="promo__art" aria-hidden="true"></div>
+          <div class="promo__body">
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.subtitle }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Habilidades para transformar tu carrera y tu vida</h2>
+        <p>Desde habilidades esenciales hasta temas técnicos de cocina.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Categorías">
+        <button
+          class="tab"
+          type="button"
+          *ngFor="let t of skillTabs"
+          [class.tab--active]="t.key === activeSkillKey"
+          (click)="setActiveSkill(t.key)"
+          role="tab"
+          [attr.aria-selected]="t.key === activeSkillKey"
+        >
+          {{ t.label }}
+        </button>
+      </div>
+
+      <div class="card-grid">
+        <article class="course-card" *ngFor="let c of activeSkill.courses">
+          <div class="course-thumb course-thumb--skill" aria-hidden="true"></div>
+
+          <div class="course-body">
+            <h3 class="course-title">{{ c.title }}</h3>
+            <p class="course-author">{{ c.author }}</p>
+
+            <div class="course-meta">
+              <span class="rating">{{ c.rating | number : '1.1-1' }}</span>
+              <span class="reviews">{{ c.reviewsLabel }}</span>
+            </div>
+
+            <div class="course-price">
+              <strong>{{ c.priceLabel }}</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="section-cta">
+        <a class="link" routerLink="/auth/register">Explorar todos los cursos →</a>
+      </div>
+    </section>
+  </main>
+
+  <app-footer></app-footer>
+</div>

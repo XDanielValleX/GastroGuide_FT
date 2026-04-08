@@ -1,0 +1,449 @@
+<div class="page">
+  <header class="page-head">
+    <h1 class="page-title">Gestor de contenido</h1>
+  </header>
+
+  <nav class="tabs" aria-label="Secciones del gestor">
+    <button
+      class="tab"
+      type="button"
+      [class.tab--active]="activeTab === 'courses'"
+      (click)="setTab('courses')"
+    >
+      Cursos
+    </button>
+    <button
+      class="tab"
+      type="button"
+      [class.tab--active]="activeTab === 'modules'"
+      (click)="setTab('modules')"
+    >
+      Módulos
+    </button>
+    <button
+      class="tab"
+      type="button"
+      [class.tab--active]="activeTab === 'lessons'"
+      (click)="setTab('lessons')"
+    >
+      Lecciones
+    </button>
+  </nav>
+
+  <section class="panel" *ngIf="!currentUserId">
+    <div class="empty">
+      <div class="empty__title">Inicia sesión como creador</div>
+      <div class="empty__text">Esta sección muestra tus cursos, módulos y lecciones en borrador.</div>
+    </div>
+  </section>
+
+  <section class="panel" *ngIf="currentUserId">
+    <div class="ytlist" *ngIf="activeTab === 'courses'">
+      <div class="ytlist__head" *ngIf="displayDrafts.length > 0">
+        <div class="ytcol ytcol--main">Curso</div>
+        <div class="ytcol">Estado</div>
+        <div class="ytcol">Detalles</div>
+        <div class="ytcol ytcol--date">Actualizado</div>
+      </div>
+
+      <article class="ytrow" *ngFor="let draft of displayDrafts; trackBy: trackDraft">
+        <ng-container *ngIf="getCourseView(draft) as c">
+          <div class="ytcell ytcell--main">
+            <div class="ytthumb" aria-hidden="true">
+              <img *ngIf="c.coverImageUrl" class="ytthumb__img" [src]="c.coverImageUrl" alt="" />
+            </div>
+
+            <div class="ytinfo">
+              <div class="ytinfo__title">{{ (c.title || '').trim() || 'Curso sin título' }}</div>
+              <div class="ytinfo__metaLine">
+                Dificultad: {{ labelCourseDifficulty(c.difficultyLevel) }} · Cocina: {{ labelCuisine(c.cuisineType) }}
+              </div>
+              <div class="ytinfo__metaLine">Categoría: {{ labelCourseCategory(c.category) }}</div>
+            </div>
+          </div>
+
+          <div class="ytcell">
+            <div class="ytbadge">{{ labelCourseState(c.state) }}</div>
+          </div>
+
+          <div class="ytcell">
+            <div class="ytinfo__metaLine">Tags: {{ (c.tags || '').trim() || '—' }} · Idioma: {{ (c.language || '').trim() || '—' }}</div>
+            <div class="ytinfo__metaLine">Precio: {{ labelPrice(c.price, c.isFree) }} · Gratis: {{ labelBoolean(c.isFree) }}</div>
+            <div class="ytinfo__metaLine">Duración: {{ c.estimatedDurationMinutes ?? '—' }} min · Creador: {{ labelCreator(c.creator) }}</div>
+          </div>
+
+          <div class="ytcell ytcell--date">{{ (draft.updatedAt || draft.createdAt) | date : 'mediumDate' }}</div>
+        </ng-container>
+      </article>
+
+      <article class="ytrow" *ngIf="drafts.length > 0">
+        <div class="ytcell ytcell--main">
+          <button class="empty__action" type="button" (click)="openCreateCourse()" aria-label="Crear otro curso">
+            <img class="empty__actionIcon" src="/add.svg" alt="" />
+          </button>
+          <div class="ytinfo">
+            <div class="ytinfo__title">Crear otro curso</div>
+            <div class="ytinfo__metaLine">Agrega cursos uno tras otro.</div>
+          </div>
+        </div>
+        <div class="ytcell"></div>
+        <div class="ytcell"></div>
+        <div class="ytcell ytcell--date"></div>
+      </article>
+
+      <div class="empty" *ngIf="displayDrafts.length === 0">
+        <div class="empty__head">
+          <div class="empty__title">Aún no tienes cursos</div>
+          <button class="empty__action" type="button" (click)="openCreateCourse()" aria-label="Crear curso">
+            <img class="empty__actionIcon" src="/add.svg" alt="" />
+          </button>
+        </div>
+        <div class="empty__text">Crea un curso para verlo aquí.</div>
+      </div>
+    </div>
+
+    <div class="ytlist" *ngIf="activeTab === 'modules'">
+      <div class="ytlist__head" *ngIf="moduleCards.length > 0">
+        <div class="ytcol ytcol--main">Módulo</div>
+        <div class="ytcol">Curso</div>
+        <div class="ytcol">Detalles</div>
+        <div class="ytcol ytcol--date">Actualizado</div>
+      </div>
+
+      <article class="ytrow" *ngFor="let card of moduleCards; trackBy: trackModuleCard">
+        <div class="ytcell ytcell--main">
+          <div class="ytthumb" aria-hidden="true"></div>
+
+          <div class="ytinfo">
+            <div class="ytinfo__title">{{ (card.module.title || '').trim() || 'Módulo sin título' }}</div>
+            <div class="ytinfo__metaLine">Lecciones: {{ (card.module.lessons && card.module.lessons.length) || 0 }}</div>
+          </div>
+        </div>
+
+        <div class="ytcell">
+          <div class="ytbadge">{{ card.courseTitle }}</div>
+        </div>
+
+        <div class="ytcell">
+          <div class="ytinfo__metaLine">Curso: {{ card.courseTitle }}</div>
+          <div class="ytinfo__metaLine">Lecciones: {{ (card.module.lessons && card.module.lessons.length) || 0 }}</div>
+        </div>
+
+        <div class="ytcell ytcell--date">{{ card.updatedAt | date : 'mediumDate' }}</div>
+      </article>
+
+      <article class="ytrow" *ngIf="moduleCards.length > 0">
+        <div class="ytcell ytcell--main">
+          <button class="empty__action" type="button" (click)="openCreateModule()" aria-label="Crear otro módulo">
+            <img class="empty__actionIcon" src="/add.svg" alt="" />
+          </button>
+          <div class="ytinfo">
+            <div class="ytinfo__title">Crear otro módulo</div>
+            <div class="ytinfo__metaLine">Agrega módulos uno tras otro.</div>
+          </div>
+        </div>
+        <div class="ytcell"></div>
+        <div class="ytcell"></div>
+        <div class="ytcell ytcell--date"></div>
+      </article>
+
+      <div class="empty" *ngIf="moduleCards.length === 0">
+        <div class="empty__head">
+          <div class="empty__title">Aún no tienes módulos</div>
+          <button class="empty__action" type="button" (click)="openCreateModule()" aria-label="Crear módulo">
+            <img class="empty__actionIcon" src="/add.svg" alt="" />
+          </button>
+        </div>
+        <div class="empty__text">Agrega módulos dentro de un curso para verlos aquí.</div>
+      </div>
+    </div>
+
+    <div class="ytlist" *ngIf="activeTab === 'lessons'">
+      <div class="ytlist__head" *ngIf="lessonCards.length > 0">
+        <div class="ytcol ytcol--main">Lección</div>
+        <div class="ytcol">Curso/Módulo</div>
+        <div class="ytcol">Detalles</div>
+        <div class="ytcol ytcol--date">Actualizado</div>
+      </div>
+
+      <article class="ytrow" *ngFor="let card of lessonCards; trackBy: trackLessonCard">
+        <div class="ytcell ytcell--main">
+          <div class="ytthumb" aria-hidden="true"></div>
+
+          <div class="ytinfo">
+            <div class="ytinfo__title">{{ (card.lesson.title || '').trim() || 'Lección sin título' }}</div>
+            <div class="ytinfo__metaLine">{{ card.courseTitle }} · {{ card.moduleTitle }}</div>
+          </div>
+        </div>
+
+        <div class="ytcell">
+          <div class="ytbadge">{{ card.courseTitle }} · {{ card.moduleTitle }}</div>
+        </div>
+
+        <div class="ytcell">
+          <div class="ytinfo__metaLine">Curso: {{ card.courseTitle }}</div>
+          <div class="ytinfo__metaLine">Módulo: {{ card.moduleTitle }}</div>
+        </div>
+
+        <div class="ytcell ytcell--date">{{ card.updatedAt | date : 'mediumDate' }}</div>
+      </article>
+
+      <article class="ytrow" *ngIf="lessonCards.length > 0">
+        <div class="ytcell ytcell--main">
+          <button class="empty__action" type="button" (click)="openCreateLesson()" aria-label="Crear otra lección">
+            <img class="empty__actionIcon" src="/add.svg" alt="" />
+          </button>
+          <div class="ytinfo">
+            <div class="ytinfo__title">Crear otra lección</div>
+            <div class="ytinfo__metaLine">Agrega lecciones uno tras otro.</div>
+          </div>
+        </div>
+        <div class="ytcell"></div>
+        <div class="ytcell"></div>
+        <div class="ytcell ytcell--date"></div>
+      </article>
+
+      <div class="empty" *ngIf="lessonCards.length === 0">
+        <div class="empty__head">
+          <div class="empty__title">Aún no tienes lecciones</div>
+          <button class="empty__action" type="button" (click)="openCreateLesson()" aria-label="Crear lección">
+            <img class="empty__actionIcon" src="/add.svg" alt="" />
+          </button>
+        </div>
+        <div class="empty__text">Agrega lecciones dentro de un módulo para verlas aquí.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-backdrop" *ngIf="createModal" (click)="closeModal()">
+    <div
+      class="modal"
+      (click)="$event.stopPropagation(); onModalClick($event)"
+      aria-label="Crear"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal__head">
+        <div class="modal__title" *ngIf="createModal === 'course'">Crear curso</div>
+        <div class="modal__title" *ngIf="createModal === 'module'">Crear módulo</div>
+        <div class="modal__title" *ngIf="createModal === 'lesson'">Crear lección</div>
+
+        <button class="modal__close" type="button" (click)="closeModal()" [disabled]="modalBusy" aria-label="Cerrar">
+          ✕
+        </button>
+      </div>
+
+      <div class="modal__msg modal__msg--error" *ngIf="modalError">{{ modalError }}</div>
+      <div class="modal__msg modal__msg--success" *ngIf="modalSuccess">{{ modalSuccess }}</div>
+
+      <form class="modal__form" *ngIf="createModal === 'course'" (ngSubmit)="submitCreateCourse()">
+        <label class="field">
+          <span class="field__label">Título</span>
+          <input class="field__input" name="courseTitle" [(ngModel)]="courseForm.title" required />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Descripción</span>
+          <textarea class="field__input field__input--textarea" name="courseDescription" [(ngModel)]="courseForm.description"></textarea>
+        </label>
+
+        <div class="grid">
+          <div class="field">
+            <span class="field__label">Dificultad</span>
+            <div class="dd" [class.dd--open]="openDropdown === 'courseDifficulty'">
+              <button class="dd__trigger" type="button" (click)="toggleDropdown('courseDifficulty')">
+                <span class="dd__value">{{ labelCourseDifficulty(courseForm.difficultyLevel) }}</span>
+                <span class="dd__chev" aria-hidden="true">▾</span>
+              </button>
+              <div class="dd__menu" *ngIf="openDropdown === 'courseDifficulty'">
+                <button
+                  class="dd__item"
+                  type="button"
+                  *ngFor="let opt of difficultyOptions"
+                  (click)="setCourseDifficulty(opt)"
+                >
+                  {{ labelCourseDifficulty(opt) }}
+                </button>
+              </div>
+              <input type="hidden" name="courseDifficulty" [(ngModel)]="courseForm.difficultyLevel" />
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field__label">Categoría</span>
+            <div class="dd" [class.dd--open]="openDropdown === 'courseCategory'">
+              <button class="dd__trigger" type="button" (click)="toggleDropdown('courseCategory')">
+                <span class="dd__value">{{ labelCourseCategory(courseForm.category) }}</span>
+                <span class="dd__chev" aria-hidden="true">▾</span>
+              </button>
+              <div class="dd__menu" *ngIf="openDropdown === 'courseCategory'">
+                <button
+                  class="dd__item"
+                  type="button"
+                  *ngFor="let opt of categoryOptions"
+                  (click)="setCourseCategory(opt)"
+                >
+                  {{ labelCourseCategory(opt) }}
+                </button>
+              </div>
+              <input type="hidden" name="courseCategory" [(ngModel)]="courseForm.category" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Tipo de cocina</span>
+          <div class="dd" [class.dd--open]="openDropdown === 'courseCuisine'">
+            <button class="dd__trigger" type="button" (click)="toggleDropdown('courseCuisine')">
+              <span class="dd__value">{{ labelCuisine(courseForm.cuisineType) }}</span>
+              <span class="dd__chev" aria-hidden="true">▾</span>
+            </button>
+            <div class="dd__menu" *ngIf="openDropdown === 'courseCuisine'">
+              <button class="dd__item" type="button" *ngFor="let opt of cuisineOptions" (click)="setCourseCuisine(opt)">
+                {{ labelCuisine(opt) }}
+              </button>
+            </div>
+            <input type="hidden" name="courseCuisine" [(ngModel)]="courseForm.cuisineType" />
+          </div>
+        </div>
+
+        <div class="modal__actions">
+          <button class="btn" type="button" (click)="closeModal()" [disabled]="modalBusy">Cancelar</button>
+          <button class="btn btn--primary" type="submit" [disabled]="modalBusy">Crear</button>
+        </div>
+      </form>
+
+      <form class="modal__form" *ngIf="createModal === 'module'" (ngSubmit)="submitCreateModule()">
+        <div class="field">
+          <span class="field__label">Curso</span>
+          <div class="dd" [class.dd--disabled]="drafts.length === 0" [class.dd--open]="openDropdown === 'moduleDraft'">
+            <button
+              class="dd__trigger"
+              type="button"
+              [disabled]="drafts.length === 0"
+              (click)="toggleDropdown('moduleDraft')"
+            >
+              <span class="dd__value">
+                {{ getDraftById(moduleForm.draftId) ? labelDraft(getDraftById(moduleForm.draftId)!) : 'Selecciona un curso' }}
+              </span>
+              <span class="dd__chev" aria-hidden="true">▾</span>
+            </button>
+            <div class="dd__menu" *ngIf="openDropdown === 'moduleDraft'">
+              <button class="dd__item" type="button" *ngFor="let d of drafts; trackBy: trackDraft" (click)="setModuleDraft(d.draftId)">
+                {{ labelDraft(d) }}
+              </button>
+            </div>
+            <input type="hidden" name="moduleDraft" [(ngModel)]="moduleForm.draftId" />
+          </div>
+        </div>
+
+        <label class="field">
+          <span class="field__label">Título del módulo</span>
+          <input class="field__input" name="moduleTitle" [(ngModel)]="moduleForm.title" required />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Descripción</span>
+          <textarea class="field__input field__input--textarea" name="moduleDescription" [(ngModel)]="moduleForm.description"></textarea>
+        </label>
+
+        <div class="modal__hint" *ngIf="drafts.length === 0">Primero crea un curso para poder crear módulos.</div>
+
+        <div class="modal__actions">
+          <button class="btn" type="button" (click)="closeModal()" [disabled]="modalBusy">Cancelar</button>
+          <button class="btn btn--primary" type="submit" [disabled]="modalBusy || !moduleForm.draftId">Crear</button>
+        </div>
+      </form>
+
+      <form class="modal__form" *ngIf="createModal === 'lesson'" (ngSubmit)="submitCreateLesson()">
+        <div class="field">
+          <span class="field__label">Curso</span>
+          <div class="dd" [class.dd--disabled]="drafts.length === 0" [class.dd--open]="openDropdown === 'lessonDraft'">
+            <button
+              class="dd__trigger"
+              type="button"
+              [disabled]="drafts.length === 0"
+              (click)="toggleDropdown('lessonDraft')"
+            >
+              <span class="dd__value">
+                {{ getDraftById(lessonForm.draftId) ? labelDraft(getDraftById(lessonForm.draftId)!) : 'Selecciona un curso' }}
+              </span>
+              <span class="dd__chev" aria-hidden="true">▾</span>
+            </button>
+            <div class="dd__menu" *ngIf="openDropdown === 'lessonDraft'">
+              <button
+                class="dd__item"
+                type="button"
+                *ngFor="let d of drafts; trackBy: trackDraft"
+                (click)="onLessonDraftChange(d.draftId)"
+              >
+                {{ labelDraft(d) }}
+              </button>
+            </div>
+            <input type="hidden" name="lessonDraft" [(ngModel)]="lessonForm.draftId" />
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Módulo</span>
+          <div
+            class="dd"
+            [class.dd--disabled]="!lessonForm.draftId || getDraftModules(lessonForm.draftId).length === 0"
+            [class.dd--open]="openDropdown === 'lessonModule'"
+          >
+            <button
+              class="dd__trigger"
+              type="button"
+              [disabled]="!lessonForm.draftId || getDraftModules(lessonForm.draftId).length === 0"
+              (click)="toggleDropdown('lessonModule')"
+            >
+              <span class="dd__value">{{ labelLessonModule(lessonForm.draftId, lessonForm.moduleIndex) }}</span>
+              <span class="dd__chev" aria-hidden="true">▾</span>
+            </button>
+            <div class="dd__menu" *ngIf="openDropdown === 'lessonModule'">
+              <button
+                class="dd__item"
+                type="button"
+                *ngFor="let m of getDraftModules(lessonForm.draftId); let i = index"
+                (click)="setLessonModuleIndex(i)"
+              >
+                {{ (m.title || '').trim() || 'Módulo sin título' }}{{ m.id ? ' (ID: ' + m.id + ')' : '' }}
+              </button>
+            </div>
+            <input type="hidden" name="lessonModule" [(ngModel)]="lessonForm.moduleIndex" />
+          </div>
+        </div>
+
+        <label class="field">
+          <span class="field__label">Título de la lección</span>
+          <input class="field__input" name="lessonTitle" [(ngModel)]="lessonForm.title" required />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Contenido</span>
+          <textarea class="field__input field__input--textarea" name="lessonContent" [(ngModel)]="lessonForm.content"></textarea>
+        </label>
+
+        <div class="modal__hint" *ngIf="drafts.length === 0">Primero crea un curso para poder crear lecciones.</div>
+        <div class="modal__hint" *ngIf="drafts.length > 0 && getDraftModules(lessonForm.draftId).length === 0">
+          Primero crea un módulo para poder crear lecciones.
+        </div>
+
+        <div class="modal__actions">
+          <button class="btn" type="button" (click)="closeModal()" [disabled]="modalBusy">Cancelar</button>
+          <button
+            class="btn btn--primary"
+            type="submit"
+            [disabled]="
+              modalBusy ||
+              !lessonForm.draftId ||
+              getDraftModules(lessonForm.draftId).length === 0
+            "
+          >
+            Crear
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

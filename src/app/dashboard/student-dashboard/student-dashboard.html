@@ -2,15 +2,21 @@
 
     <app-header></app-header>
 
-    <div class="main-wrapper">
+    <main class="content-area">
+        <ng-container [ngSwitch]="activeView">
+            <app-student-home-view
+                *ngSwitchCase="'home'"
+                [firstName]="(user$ | async)?.firstName"
+            ></app-student-home-view>
 
-        <app-sidebar></app-sidebar>
+            <app-student-courses-view *ngSwitchCase="'courses'"></app-student-courses-view>
 
-        <main class="content-area">
-            <app-reels-feed></app-reels-feed>
-        </main>
-
-    </div>
+            <app-student-home-view
+                *ngSwitchDefault
+                [firstName]="(user$ | async)?.firstName"
+            ></app-student-home-view>
+        </ng-container>
+    </main>
 
     <app-footer></app-footer>
 </div>

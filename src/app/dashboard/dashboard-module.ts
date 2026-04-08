@@ -10,7 +10,7 @@ import { SharedModule } from '../shared/shared-module'; // <-- IMPORTANTE
   declarations: [
     StudentDashboardComponent,
     CreatorDashboardComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
   ],
   imports: [
     CommonModule,

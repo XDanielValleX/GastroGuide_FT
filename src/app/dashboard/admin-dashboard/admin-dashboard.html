@@ -2,11 +2,75 @@
 
 	<app-header></app-header>
 
-	<div class="main-wrapper">
-		<app-sidebar></app-sidebar>
+	<main class="content-area">
+		<section class="admin-card" aria-label="Solicitudes de creadores">
+			<header class="admin-card__header">
+				<h2 class="admin-card__title">Solicitudes de creadores</h2>
+				<button type="button" class="btn btn-outline" (click)="reload()" [disabled]="loading">
+					Recargar
+				</button>
+			</header>
 
-		<main class="content-area"></main>
-	</div>
+			<p class="admin-card__hint">
+				Los usuarios tipo <strong>CREATOR</strong> se registran como “pendientes”. Debes aprobar su solicitud para
+				que puedan iniciar sesión.
+			</p>
+
+			<div *ngIf="errorMessage" class="inline-alert" role="alert">
+				{{ errorMessage }}
+			</div>
+			<div *ngIf="successMessage" class="inline-success" role="status">
+				{{ successMessage }}
+			</div>
+
+			<div *ngIf="loading" class="placeholder">Cargando solicitudes...</div>
+
+			<ng-container *ngIf="!loading">
+				<div *ngIf="requests.length === 0" class="placeholder">No hay solicitudes pendientes.</div>
+
+				<article *ngFor="let req of requests" class="request-card">
+					<div class="request-card__meta">
+						<div class="request-card__email">{{ req.creatorEmail }}</div>
+						<div class="request-card__details">
+							<span class="pill">#{{ req.id }}</span>
+							<span class="pill">{{ req.status }}</span>
+							<span class="pill" *ngIf="req.requestedAt">Solicitado: {{ req.requestedAt }}</span>
+						</div>
+						<div *ngIf="req.notes" class="request-card__notes">Notas: {{ req.notes }}</div>
+					</div>
+
+					<div class="request-card__actions">
+						<button
+							type="button"
+							class="btn btn-approve"
+							(click)="approve(req.id)"
+							[disabled]="busyRequestId !== null"
+						>
+							{{ busyRequestId === req.id ? 'Procesando...' : 'Aprobar' }}
+						</button>
+
+						<div class="reject-row">
+							<input
+								class="reject-input"
+								type="text"
+								placeholder="Motivo de rechazo"
+								[(ngModel)]="rejectReasons[req.id]"
+								[disabled]="busyRequestId !== null"
+							/>
+							<button
+								type="button"
+								class="btn btn-reject"
+								(click)="reject(req.id)"
+								[disabled]="busyRequestId !== null || !(rejectReasons[req.id] || '').trim()"
+							>
+								Rechazar
+							</button>
+						</div>
+					</div>
+				</article>
+			</ng-container>
+		</section>
+	</main>
 
 	<app-footer></app-footer>
 </div>

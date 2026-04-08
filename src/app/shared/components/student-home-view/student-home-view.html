@@ -1,0 +1,145 @@
+<section class="welcome" aria-label="Bienvenida">
+  <div class="welcome-avatar" aria-hidden="true">{{ initials }}</div>
+  <div class="welcome-text">
+    <h1 class="welcome-title">Hola de nuevo, {{ firstName || 'Usuario' }}</h1>
+    <button class="welcome-link" type="button">Añadir intereses</button>
+  </div>
+</section>
+
+<section class="banner" aria-label="Panel principal">
+  <div class="banner-inner">
+    <div class="banner-card">
+      <h2 class="banner-title">Un aprendizaje interesante</h2>
+      <p class="banner-subtitle">
+        Habilidades para tu presente (y tu futuro). Da tus primeros pasos con nosotros.
+      </p>
+    </div>
+    <div class="banner-art" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section id="learning" class="section-block" aria-label="Empecemos a aprender">
+  <div class="section-head">
+    <h2 class="section-title-lg">Empecemos a aprender</h2>
+    <button class="section-action" type="button">Mi aprendizaje</button>
+  </div>
+
+  <div class="learning-list" role="list">
+    <article class="learning-item" role="listitem">
+      <div class="learning-thumb" aria-hidden="true"></div>
+      <div class="learning-body">
+        <p class="learning-kicker">Videotutoriales</p>
+        <h3 class="learning-title">Cocina Italiana · Introducción</h3>
+        <p class="learning-meta">Clase · 3 min</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="now" class="section-block" aria-label="Qué aprender ahora">
+  <h2 class="section-title-xl">Qué aprender ahora</h2>
+
+  <h3 class="section-title">Recomendaciones para ti</h3>
+  <div class="carousel" role="list" aria-label="Recomendaciones para ti">
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Panadería básica</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.7 · 1 h 24 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Repostería creativa</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.6 · 1 h 02 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Cortes y cuchillos</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.7 · 48 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Cocina saludable</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.8 · 55 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Emplatado moderno</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.5 · 42 min</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="trending" class="section-block" aria-label="Cursos en tendencia">
+  <h3 class="section-title">Cursos en tendencia</h3>
+  <p class="section-subtitle">Lo que está sonando en la comunidad</p>
+
+  <div class="carousel" role="list" aria-label="Cursos en tendencia">
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Cocina internacional</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.7 · 1 h 10 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Salsas y fondos</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.6 · 50 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Técnicas de cocción</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.8 · 1 h 05 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Postres rápidos</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.5 · 38 min</p>
+      </div>
+    </article>
+
+    <article class="tile" role="listitem">
+      <div class="tile-thumb" aria-hidden="true"></div>
+      <div class="tile-body">
+        <h4 class="tile-title">Cocina en 30 minutos</h4>
+        <p class="tile-author">GastroGuide</p>
+        <p class="tile-meta">4.4 · 45 min</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Reels descartado por ahora.
+<app-reels-feed></app-reels-feed>
+-->

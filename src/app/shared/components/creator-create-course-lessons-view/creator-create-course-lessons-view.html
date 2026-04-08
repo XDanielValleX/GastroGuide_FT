@@ -1,0 +1,88 @@
+<div class="panel">
+  <div class="info" *ngIf="modules.length === 0">Agrega al menos un módulo antes de las lecciones.</div>
+
+  <div class="list" *ngFor="let m of modules; let mi = index">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="chip">{{ mi + 1 }}</span>
+          <div>
+            <h4>{{ m.title || 'Módulo sin título' }}</h4>
+            <p class="muted">{{ m.description }}</p>
+          </div>
+        </div>
+        <div class="card-actions">
+          <span class="badge warning" *ngIf="!m.id">No guardado</span>
+          <span class="badge success" *ngIf="m.id">ID: {{ m.id }}</span>
+        </div>
+      </div>
+
+      <div class="lesson-list" *ngIf="m.lessons.length; else noLessons">
+        <div class="lesson" *ngFor="let l of m.lessons; let li = index">
+          <div class="lesson-main">
+            <span class="chip light">{{ li + 1 }}</span>
+            <div>
+              <p class="lesson-title">{{ l.title }}</p>
+              <p class="muted">{{ l.content }}</p>
+            </div>
+          </div>
+          <div class="lesson-actions">
+            <span class="badge success" *ngIf="l.id">Guardada</span>
+            <button
+              type="button"
+              class="icon danger"
+              (click)="removeLesson.emit({ moduleIndex: mi, lessonIndex: li })"
+              aria-label="Eliminar lección"
+            >
+              🗑️
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noLessons>
+        <div class="empty">Sin lecciones registradas para este módulo.</div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="subpanel">
+    <h4>Agregar lección</h4>
+
+    <div class="field">
+      <label for="l-module">Módulo destino</label>
+      <select
+        id="l-module"
+        name="lessonModuleIndex"
+        [ngModel]="lessonModuleIndex"
+        (ngModelChange)="lessonModuleIndexChange.emit($event)"
+      >
+        <option *ngFor="let m of modules; let idx = index" [ngValue]="idx">
+          {{ idx + 1 }} - {{ m.title || 'Sin título' }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="l-title">Título</label>
+      <input id="l-title" type="text" [(ngModel)]="newLesson.title" name="newLessonTitle" minlength="2" />
+    </div>
+
+    <div class="field">
+      <label for="l-content">Contenido</label>
+      <textarea id="l-content" [(ngModel)]="newLesson.content" name="newLessonContent" rows="4" minlength="10"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="button" (click)="addLessonToModule.emit()">+ Agregar lección</button>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn ghost" type="button" (click)="saveLessons.emit()" [disabled]="savingLessons">
+      {{ savingLessons ? 'Guardando...' : 'Guardar lecciones' }}
+    </button>
+    <button class="btn secondary" type="button" (click)="prev.emit()">Atrás</button>
+    <button class="btn" type="button" (click)="next.emit()">Siguiente</button>
+  </div>
+</div>

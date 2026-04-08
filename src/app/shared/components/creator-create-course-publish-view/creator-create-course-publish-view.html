@@ -1,0 +1,16 @@
+<div class="panel">
+  <h3 class="summary-title">Resumen</h3>
+  <div class="summary-grid">
+    <div class="summary-item"><span>Título</span><strong>{{ course.title || '—' }}</strong></div>
+    <div class="summary-item"><span>Estado</span><strong>{{ course.state }}</strong></div>
+    <div class="summary-item"><span>Módulos</span><strong>{{ modulesCount }}</strong></div>
+    <div class="summary-item"><span>Lecciones</span><strong>{{ lessonsCount }}</strong></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn secondary" type="button" (click)="prev.emit()">Atrás</button>
+    <button class="btn" type="button" (click)="publish.emit()" [disabled]="publishing || !createdCourseId">
+      {{ publishing ? 'Publicando...' : 'Publicar curso' }}
+    </button>
+  </div>
+</div>

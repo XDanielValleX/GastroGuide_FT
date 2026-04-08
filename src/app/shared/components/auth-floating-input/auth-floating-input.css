@@ -12,6 +12,8 @@
   background: rgba(255, 255, 255, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.35);
   transition: border-color 0.3s linear, box-shadow 0.3s ease;
+  cursor: text;
+  overflow: hidden;
 }
 
 .floating-label:focus-within {
@@ -19,7 +21,7 @@
   box-shadow: 0 0 0 2px var(--color-info);
 }
 
-.floating-label label {
+.floating-label .field-label {
   position: absolute;
   top: calc(50% - 7px);
   left: 0;
@@ -29,6 +31,7 @@
   font-size: 12.5px;
   font-weight: 400;
   padding-left: 44px;
+  pointer-events: none;
 }
 
 .floating-label input {
@@ -36,7 +39,7 @@
   margin-left: auto;
   display: block;
   padding: 20px 12px;
-  height: 56px;
+  height: 100%;
   box-sizing: border-box;
   background: transparent;
   border: 0;
@@ -53,6 +56,9 @@
   height: 56px;
   width: 44px;
   display: flex;
+  cursor: text;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .floating-label .icon svg {
@@ -68,7 +74,7 @@
   padding: 28px 12px 12px;
 }
 
-.floating-label input:not(:placeholder-shown) + label {
+.floating-label input:not(:placeholder-shown) + .field-label {
   transform: translateY(-10px);
   opacity: 0.7;
 }

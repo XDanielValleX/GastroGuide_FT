@@ -1,0 +1,25 @@
+<div class="studio-shell">
+  <header class="studio-topbar" aria-label="Barra superior de Studio">
+    <a class="studio-brand" routerLink="/studio/panel" aria-label="Ir al panel de Studio">
+      <span class="studio-brand__mark" aria-hidden="true">G</span>
+      <span class="studio-brand__name">GatroStudio</span>
+    </a>
+
+    <div class="studio-search" role="search" aria-label="Buscar en tu canal">
+      <input class="studio-search__input" type="search" placeholder="Buscar en tu canal" />
+    </div>
+
+    <div class="studio-actions" aria-label="Acciones">
+      <a class="studio-action studio-action--small" routerLink="/dashboard/creator" [queryParams]="{ view: 'home' }">Inicio</a>
+      <span class="studio-avatar" aria-label="Perfil">{{ avatarInitial }}</span>
+    </div>
+  </header>
+
+  <main class="studio-main" aria-label="GatroStudio">
+    <app-studio-sidebar class="studio-sidebar-slot"></app-studio-sidebar>
+
+    <section class="studio-content" aria-label="Contenido de Studio">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

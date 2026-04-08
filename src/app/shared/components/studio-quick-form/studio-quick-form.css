@@ -1,0 +1,22 @@
+.page {
+  display: grid;
+  gap: 12px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--color-text-white);
+}
+
+.page-sub {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 800;
+}
+
+.form-host {
+  border-radius: 18px;
+  overflow: hidden;
+}

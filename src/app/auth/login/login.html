@@ -10,39 +10,38 @@
     <form class="log-in" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <h4>GastroGuide</h4>
 
-        <div class="floating-label">
-            <input type="email" id="email" name="email" placeholder="email" autocomplete="email" inputmode="email"
-                formControlName="email">
-            <label for="email">Email:</label>
-            <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 100 100">
-                    <path
-                        d="m17.5 977c-1.3 0-2.4 1.1-2.4 2.4v45.9c0 1.3 1.1 2.4 2.4 2.4h64.9c1.3 0 2.4-1.1 2.4-2.4v-45.9c0-1.3-1.1-2.4-2.4-2.4h-64.9zm2.4 4.8h60.2v1.2l-30.1 22-30.1-22v-1.2zm0 7l28.7 21c0.8 0.6 2 0.6 2.8 0l28.7-21v34.1h-60.2v-34.1z"
-                        transform="translate(0 -952.36)" />
-                </svg>
-            </div>
-        </div>
+        <app-auth-floating-input
+            id="email"
+            label="Email:"
+            type="email"
+            placeholder="email"
+            autocomplete="email"
+            [inputmode]="'email'"
+            icon="email"
+            [control]="emailCtrl"
+        />
 
-        <div class="floating-label">
-            <input type="password" id="password" name="password" placeholder="password" autocomplete="current-password"
-                formControlName="password">
-            <label for="password">Password:</label>
-            <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                    <path d="M19,21H5V9h14V21z M6,20h12V10H6V20z" />
-                    <path
-                        d="M16.5,10h-1V7c0-1.9-1.6-3.5-3.5-3.5S8.5,5.1,8.5,7v3h-1V7c0-2.5,2-4.5,4.5-4.5s4.5,2,4.5,4.5V10z" />
-                    <circle cx="12" cy="15" r="1.5" />
-                </svg>
-            </div>
-        </div>
+        <app-auth-floating-input
+            id="password"
+            label="Password:"
+            type="password"
+            placeholder="password"
+            autocomplete="current-password"
+            icon="password"
+            [control]="passwordCtrl"
+        />
 
         <div *ngIf="loginError" class="inline-alert" role="alert">
-            Credenciales incorrectas. Intenta de nuevo.
+            {{ loginErrorMessage || 'Credenciales incorrectas. Intenta de nuevo.' }}
         </div>
 
         <div *ngIf="registerSuccess" class="inline-success" role="status">
-            Registro exitoso. Por favor inicia sesión.
+            <ng-container *ngIf="registeredRole === 'CREATOR'; else registeredDefault">
+                Registro exitoso. Tu cuenta debe ser verificada por un administrador antes de iniciar sesión.
+            </ng-container>
+            <ng-template #registeredDefault>
+                Registro exitoso. Por favor inicia sesión.
+            </ng-template>
         </div>
 
         <button type="submit" [disabled]="loginForm.invalid || loading">

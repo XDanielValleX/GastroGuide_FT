@@ -3,23 +3,163 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	background-color: var(--color-text-black);
-}
-
-/* Contenedor que agrupa Sidebar y Contenido (Debajo del header) */
-.main-wrapper {
-	display: flex;
-	height: calc(100vh - 70px);
-	overflow: hidden;
+	background-color: var(--color-bg-general);
 }
 
 /* Área donde van las vistas */
 .content-area {
 	flex: 1;
+	padding: 18px 16px 24px;
+	max-width: 1100px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.placeholder {
+	margin: 0;
+	padding: 16px 16px;
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.75);
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	color: rgba(0, 0, 0, 0.65);
+}
+
+.admin-card {
+	padding: 16px;
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.75);
+	border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.admin-card__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.admin-card__title {
+	margin: 0;
+	color: var(--color-secondary-2);
+	font-size: 20px;
+	line-height: 1.2;
+}
+
+.admin-card__hint {
+	margin: 10px 0 12px;
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.inline-alert,
+.inline-success {
+	width: 100%;
+	margin: 8px 0 0;
+	padding: 10px 12px;
+	border-radius: 12px;
+	color: var(--color-text-black);
+	background: rgba(255, 255, 255, 0.35);
+	border-left: 3px solid transparent;
+}
+
+.inline-alert {
+	border-left-color: var(--color-danger);
+}
+
+.inline-success {
+	border-left-color: var(--color-success);
+}
+
+.request-card {
+	margin-top: 12px;
+	padding: 14px;
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.55);
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.request-card__meta {
+	flex: 1;
+	min-width: 260px;
+}
+
+.request-card__email {
+	font-weight: 600;
+	color: rgba(0, 0, 0, 0.85);
+	margin-bottom: 6px;
+}
+
+.request-card__details {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	color: rgba(0, 0, 0, 0.7);
+	font-size: 13px;
+}
+
+.pill {
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(16, 29, 38, 0.08);
+	border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.request-card__notes {
+	margin-top: 8px;
+	color: rgba(0, 0, 0, 0.65);
+	font-size: 13px;
+}
+
+.request-card__actions {
+	min-width: 280px;
 	display: flex;
 	flex-direction: column;
-	min-height: 0;
-	overflow: hidden;
-	background-color: var(--color-text-black);
-	position: relative;
+	gap: 10px;
+}
+
+.reject-row {
+	display: flex;
+	gap: 8px;
+}
+
+.reject-input {
+	flex: 1;
+	padding: 10px 12px;
+	border-radius: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	background: rgba(255, 255, 255, 0.9);
+	box-sizing: border-box;
+}
+
+.btn {
+	padding: 10px 12px;
+	border-radius: 12px;
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.btn:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.btn-outline {
+	background: transparent;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: var(--color-secondary-2);
+}
+
+.btn-approve {
+	background: var(--color-success);
+	color: var(--color-text-white);
+}
+
+.btn-reject {
+	background: var(--color-danger);
+	color: var(--color-text-white);
 }

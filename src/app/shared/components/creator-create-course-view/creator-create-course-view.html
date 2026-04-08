@@ -1,0 +1,97 @@
+<div class="create-wrapper">
+  <div class="create-card">
+    <div class="create-header-row">
+      <div class="create-header">
+        <h2>Crear curso</h2>
+        <p class="subtitle">Sigue los pasos para crear tu curso (Información → Módulos → Lecciones → Publicar)</p>
+      </div>
+    </div>
+
+    <div class="wizard-progress" aria-label="Progreso">
+      <div class="step" [class.active]="step >= 1">1. Info</div>
+      <div class="bar"><div class="bar-fill" [style.width.%]="barFill(0)"></div></div>
+      <div class="step" [class.active]="step >= 2">2. Módulos</div>
+      <div class="bar"><div class="bar-fill" [style.width.%]="barFill(1)"></div></div>
+      <div class="step" [class.active]="step >= 3">3. Lecciones</div>
+      <div class="bar"><div class="bar-fill" [style.width.%]="barFill(2)"></div></div>
+      <div class="step" [class.active]="step >= 4">4. Publicar</div>
+    </div>
+
+    <ng-container *ngIf="currentUser; else loginRequired">
+      <div class="create-body">
+        <div class="create-main">
+          <app-creator-create-course-info-view
+            *ngIf="step === 1"
+            [course]="course"
+            [createdCourseId]="createdCourseId"
+            [modulesCount]="modules.length"
+            [lessonsCount]="countLessons()"
+            [savingCourse]="savingCourse"
+            [currentUserId]="currentUser.id"
+            (saveCourseInfo)="saveCourseInfo()"
+            (cancel)="cancel()"
+            (next)="nextStep()"
+          ></app-creator-create-course-info-view>
+
+          <app-creator-create-course-modules-view
+            *ngIf="step === 2"
+            [createdCourseId]="createdCourseId"
+            [modules]="modules"
+            [newModule]="newModule"
+            [savingModules]="savingModules"
+            (addModule)="addModule()"
+            (removeModule)="removeModule($event)"
+            (saveModules)="saveModules()"
+            (prev)="prevStep()"
+            (next)="nextStep()"
+          ></app-creator-create-course-modules-view>
+
+          <app-creator-create-course-lessons-view
+            *ngIf="step === 3"
+            [modules]="modules"
+            [newLesson]="newLesson"
+            [savingLessons]="savingLessons"
+            [(lessonModuleIndex)]="lessonModuleIndex"
+            (addLessonToModule)="addLessonToModule()"
+            (removeLesson)="removeLesson($event.moduleIndex, $event.lessonIndex)"
+            (saveLessons)="saveLessons()"
+            (prev)="prevStep()"
+            (next)="nextStep()"
+          ></app-creator-create-course-lessons-view>
+
+          <app-creator-create-course-publish-view
+            *ngIf="step === 4"
+            [course]="course"
+            [createdCourseId]="createdCourseId"
+            [publishing]="publishing"
+            [modulesCount]="modules.length"
+            [lessonsCount]="countLessons()"
+            (prev)="prevStep()"
+            (publish)="publishCourse()"
+          ></app-creator-create-course-publish-view>
+        </div>
+
+        <div class="create-side">
+          <app-creator-saved-courses-panel
+            [createdCourseId]="createdCourseId"
+            [modulesCount]="modules.length"
+            [lessonsCount]="countLessons()"
+            [currentUserId]="currentUser.id"
+            (selectDraft)="loadDraft($event)"
+          ></app-creator-saved-courses-panel>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #loginRequired>
+      <div class="panel">
+        <div class="info warning">
+          <h3>Inicia sesión para crear cursos</h3>
+          <p class="muted">Necesitas una sesión activa para registrar cursos, módulos y lecciones.</p>
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="toast" *ngIf="toast">{{ toast }}</div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="panel">
+  <div class="info warning" *ngIf="!createdCourseId">Guarda primero la información del curso para habilitar módulos.</div>
+
+  <div class="list" *ngIf="modules.length; else modulesEmpty">
+    <div class="card" *ngFor="let m of modules; let i = index">
+      <div class="card-head">
+        <div class="card-title">
+          <span class="chip">{{ i + 1 }}</span>
+          <div>
+            <h4>{{ m.title || 'Módulo sin título' }}</h4>
+            <p class="muted">{{ m.description }}</p>
+          </div>
+        </div>
+        <div class="card-actions">
+          <span class="badge success" *ngIf="m.id">Guardado</span>
+          <button type="button" class="icon danger" (click)="removeModule.emit(i)" aria-label="Eliminar módulo">🗑️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #modulesEmpty>
+    <div class="empty">Aún no hay módulos. Usa el formulario de abajo para comenzar.</div>
+  </ng-template>
+
+  <div class="subpanel">
+    <h4>Agregar nuevo módulo</h4>
+    <div class="field">
+      <label for="m-title">Título</label>
+      <input id="m-title" type="text" [(ngModel)]="newModule.title" name="newModuleTitle" minlength="2" />
+    </div>
+    <div class="field">
+      <label for="m-desc">Descripción</label>
+      <textarea id="m-desc" [(ngModel)]="newModule.description" name="newModuleDesc" rows="3" minlength="10"></textarea>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" (click)="addModule.emit()">+ Agregar módulo</button>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn ghost" type="button" (click)="saveModules.emit()" [disabled]="savingModules || !createdCourseId">
+      {{ savingModules ? 'Guardando...' : 'Guardar módulos' }}
+    </button>
+    <button class="btn secondary" type="button" (click)="prev.emit()">Atrás</button>
+    <button class="btn" type="button" (click)="next.emit()">Siguiente</button>
+  </div>
+</div>

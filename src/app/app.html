@@ -1,3 +1,5 @@
 
-<router-outlet></router-outlet>
+<div class="route-shell" [class.route-shell--loading]="!routeReady()" aria-label="Contenido">
+	<router-outlet *ngIf="routeReady()"></router-outlet>
+</div>
 

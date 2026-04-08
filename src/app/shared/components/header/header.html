@@ -1,17 +1,58 @@
 <header class="header-container">
     <div class="brand">
-        <a routerLink="/" class="brand-link">GastroGuide<span class="brand-plus">+</span></a>
+        <a
+            class="brand-link"
+            [routerLink]="isDashboard ? profileRoute : '/'"
+            [queryParams]="isDashboard ? { view: 'home' } : null"
+        >
+            GastroGuide<span class="brand-plus">+</span>
+        </a>
     </div>
 
+    <nav class="dash-nav" *ngIf="isDashboard" aria-label="Navegación del dashboard">
+        <button class="dash-link" type="button" (click)="setDashboardView('home')">Inicio</button>
+        <button class="dash-link" type="button" (click)="setDashboardView('courses')">Cursos</button>
+        <app-search-filter-bar
+            class="dash-search"
+            [query]="dashboardQuery"
+            (queryChange)="onDashboardQueryChange($event)"
+            (searchSubmit)="onDashboardSearchSubmit($event)"
+            (filterClick)="onDashboardFilterClick()"
+        ></app-search-filter-bar>
+    </nav>
+
     <div class="profile-actions">
-        <button class="btn-pill btn-primary" type="button" routerLink="/home3" *ngIf="showCreate">
-            CREAR
+        <button
+            class="header-create-icon"
+            type="button"
+            (click)="onCreateClick()"
+            *ngIf="showCreate"
+            aria-label="Crear"
+            title="Crear"
+        >
+            <img class="header-create-icon__img" src="/add.svg" alt="" aria-hidden="true" />
         </button>
 
-        <button class="btn-pill btn-outline profile-link" type="button" [routerLink]="profileRoute">
-            <img *ngIf="user?.image" [src]="user?.image" alt="Avatar" class="mini-avatar"
-                (error)="onAvatarError($event)" />
-            <span class="mini-name">{{ user?.username || user?.name || 'Mi perfil' }}</span>
+        <button
+            class="btn-pill btn-outline profile-link"
+            type="button"
+            [routerLink]="profileRoute"
+            aria-label="Mi perfil"
+        >
+            <img
+                *ngIf="hasAvatarImage; else initialsAvatar"
+                [src]="avatarSrc"
+                alt="Foto de perfil"
+                class="mini-avatar"
+                (error)="onAvatarError($event)"
+            />
+            <ng-template #initialsAvatar>
+                <span class="mini-avatar mini-avatar--text" aria-hidden="true">{{ avatarInitial }}</span>
+            </ng-template>
+
+            <span class="profile-name" *ngIf="user?.name || user?.username">
+                {{ user?.name || user?.username }}
+            </span>
         </button>
 
         <button class="btn-pill btn-transparent" (click)="onLogoutClick()">
@@ -19,3 +60,29 @@
         </button>
     </div>
 </header>
+
+<nav
+    class="categories-bar"
+    *ngIf="isStudentDashboard || isCreatorDashboard"
+    [class.categories-bar--open]="showCategories"
+    [attr.aria-hidden]="!showCategories"
+    aria-label="Categorías"
+>
+    <div class="categories-inner">
+        <button
+            class="cat"
+            type="button"
+            *ngFor="let cat of studentCategories"
+            [class.cat--active]="cat === activeStudentCategory"
+            (click)="setActiveStudentCategory(cat)"
+        >
+            {{ cat }}
+        </button>
+    </div>
+</nav>
+
+<div
+    class="header-spacer"
+    [class.header-spacer--with-cats]="(isStudentDashboard || isCreatorDashboard) && showCategories"
+    aria-hidden="true"
+></div>

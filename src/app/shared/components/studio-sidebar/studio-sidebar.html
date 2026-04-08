@@ -1,0 +1,46 @@
+<aside class="studio-sidebar" aria-label="Studio">
+  <div class="studio-channel" aria-label="Creador">
+    <ng-container *ngIf="vm$ | async as vm">
+      <div class="studio-channel__avatar" aria-hidden="true">{{ vm.initial }}</div>
+      <div class="studio-channel__meta">
+        <div class="studio-channel__label">Creador</div>
+        <div class="studio-channel__name">{{ vm.name }}</div>
+      </div>
+    </ng-container>
+  </div>
+
+  <nav class="studio-nav" aria-label="Navegación de Studio">
+    <a routerLink="/studio/panel" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Panel</span>
+    </a>
+    <a routerLink="/studio/contenido" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Contenido</span>
+    </a>
+    <a routerLink="/studio/crear-rapido" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Crea con Formulario rapido</span>
+    </a>
+    <a routerLink="/studio/analytics" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Analytics</span>
+    </a>
+    <a routerLink="/studio/comunidad" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Comunidad</span>
+    </a>
+    <a routerLink="/studio/ingresos" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Ingresos</span>
+    </a>
+    <a routerLink="/studio/configuracion" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Configuración</span>
+    </a>
+    <a routerLink="/studio/comentarios" routerLinkActive="is-active" class="studio-link">
+      <span class="studio-link__icon" aria-hidden="true"></span>
+      <span class="studio-link__text">Enviar comentarios</span>
+    </a>
+  </nav>
+</aside>

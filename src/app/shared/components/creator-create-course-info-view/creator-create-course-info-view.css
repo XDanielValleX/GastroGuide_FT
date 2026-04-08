@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.info-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.info-form {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.info-side {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 860px) {
+  .info-layout {
+    flex-direction: column;
+  }
+}

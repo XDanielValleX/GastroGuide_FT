@@ -85,6 +85,10 @@ form {
     width: 320px
 }
 
+app-auth-floating-input {
+    width: 100%;
+}
+
 a.discrete {
     color: rgba(0, 0, 0, .6);
     font-size: 14px;
@@ -130,85 +134,6 @@ button:active:not(:disabled) {
 button:disabled {
     opacity: .6;
     cursor: not-allowed
-}
-
-input {
-    font-size: 16px;
-    height: 56px;
-    background: transparent;
-    width: 280px;
-    box-sizing: border-box;
-    color: var(--color-text-black);
-    font-weight: 400
-}
-
-.floating-label {
-    position: relative;
-    margin-bottom: 10px;
-    width: 100%;
-    height: 56px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, .18);
-    border: 1px solid rgba(255, 255, 255, .35);
-    transition: border-color .3s linear, box-shadow .3s ease
-}
-
-.floating-label:focus-within {
-    border-color: var(--color-info);
-    box-shadow: 0 0 0 2px var(--color-info)
-}
-
-.floating-label label {
-    position: absolute;
-    top: calc(50% - 7px);
-    left: 0;
-    opacity: 0;
-    transition: transform .3s ease, opacity .3s ease;
-    color: rgba(0, 0, 0, .7);
-    font-size: 12.5px;
-    font-weight: 400;
-    padding-left: 44px
-}
-
-.floating-label input {
-    width: calc(100% - 44px);
-    margin-left: auto;
-    display: block;
-    padding: 20px 12px;
-    border: 0;
-    outline: 0
-}
-
-.floating-label .icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 56px;
-    width: 44px;
-    display: flex
-}
-
-.floating-label .icon svg {
-    height: 30px;
-    width: 30px;
-    margin: auto;
-    opacity: .25;
-    transition: opacity .3s ease, fill .3s ease;
-    fill: var(--color-text-black)
-}
-
-.floating-label input:not(:placeholder-shown) {
-    padding: 28px 12px 12px
-}
-
-.floating-label input:not(:placeholder-shown)+label {
-    transform: translateY(-10px);
-    opacity: .7
-}
-
-.floating-label input:valid:not(:placeholder-shown)+label+.icon svg {
-    opacity: 1;
-    fill: var(--color-info)
 }
 
 .inline-alert,

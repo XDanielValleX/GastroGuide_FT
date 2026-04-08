@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 export type AuthInputIcon = 'email' | 'password' | 'user' | 'name';
@@ -10,6 +10,8 @@ export type AuthInputIcon = 'email' | 'password' | 'user' | 'name';
   styleUrl: './auth-floating-input.css',
 })
 export class AuthFloatingInputComponent {
+  @ViewChild('inputEl') private inputEl?: ElementRef<HTMLInputElement>;
+
   @Input({ required: true }) control!: FormControl;
 
   @Input({ required: true }) id!: string;
@@ -24,5 +26,13 @@ export class AuthFloatingInputComponent {
 
   get showValidState(): boolean {
     return this.control?.valid && (this.control?.dirty || this.control?.touched);
+  }
+
+  focusInput(event: Event): void {
+    const target = event.target as HTMLElement | null;
+    if (target && target.tagName === 'INPUT') {
+      return;
+    }
+    this.inputEl?.nativeElement.focus();
   }
 }

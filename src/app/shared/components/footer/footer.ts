@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
@@ -6,28 +8,32 @@ import { Component } from '@angular/core';
   templateUrl: './footer.html',
   styleUrls: ['./footer.css']
 })
-export class FooterComponent {
-  email: string = '';
-  submitting: boolean = false;
-  submitted: boolean = false;
+export class FooterComponent implements OnDestroy {
+  private readonly router = inject(Router);
+  private subscription: Subscription | null = null;
+
+  showFooter = true;
   year: number = new Date().getFullYear();
 
-  onSubscribe(event: Event) {
-    event.preventDefault();
-    if (!this.email) return;
+  constructor() {
+    this.subscription = new Subscription();
 
-    this.submitting = true;
+    // Track route to show/hide footer.
+    this.subscription.add(
+      this.router.events
+        .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+        .subscribe((e) => {
+          this.showFooter = !e.urlAfterRedirects.startsWith('/auth');
+        })
+    );
 
-    // Simulamos una llamada a la API
-    setTimeout(() => {
-      this.submitting = false;
-      this.submitted = true;
-      this.email = '';
-
-      // Ocultar mensaje de éxito después de 3 segundos
-      setTimeout(() => {
-        this.submitted = false;
-      }, 3000);
-    }, 1500);
+    // Also set initial value.
+    this.showFooter = !this.router.url.startsWith('/auth');
   }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+    this.subscription = null;
+  }
+
 }
